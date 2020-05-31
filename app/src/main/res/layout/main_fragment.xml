@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="br.com.shutup.ui.main.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="br.com.shutup.ui.main.MainFragment">
+
+        <TextView
+            android:id="@+id/tvVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.volume.toString() + '%'}"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toTopOf="@id/sbVolume"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="0%" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sbVolume"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:padding="10dp"
+            android:progress="@{viewModel.volume}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvVolume" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtIp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:hint="@string/setIpConfig"
+            android:text="@={viewModel.ipConfig}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/btEnabled"
+            app:layout_constraintEnd_toEndOf="@id/btDisabled"
+            app:layout_constraintStart_toStartOf="@id/btEnabled" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lock_sound"
+            android:layout_marginTop="15dp"
+            android:enabled="@{!viewModel.obsIsLockDevice}"
+            app:layout_constraintEnd_toStartOf="@id/btDisabled"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sbVolume"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btDisabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unlock_sound"
+            android:layout_marginTop="15dp"
+            android:enabled="@{viewModel.obsIsLockDevice}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btEnabled"
+            app:layout_constraintTop_toBottomOf="@id/sbVolume"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
